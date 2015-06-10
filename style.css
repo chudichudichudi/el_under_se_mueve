@@ -1,0 +1,22 @@
+
+
+body {
+  background-color: #944233;
+}
+
+h1 {
+  font-family: 'Press Start 2P', cursive;
+  color: #a1c758;
+  text-align: center;
+}
+
+ul {
+  background-color:#7190D0;
+  display:flex;
+  flex-wrap: wrap;
+  padding: 5px;
+}
+
+li {
+  display: flex;
+}
