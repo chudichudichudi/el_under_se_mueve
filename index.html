@@ -2,80 +2,29 @@
   <head>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
     <script src="mustache.min.js"></script>
+    <script src="autolink-min.js"></script>
+    <script src="app.js"></script>
     <link rel="stylesheet" href="style.css" />
     <link href='http://fonts.googleapis.com/css?family=Press+Start+2P' rel='stylesheet' type='text/css'>
     <title>El under se mueve</title>
-    <script>
-    var template;
-    $(document).ready(function() {
-      $.ajaxSetup({ cache: true });
-      $.getScript('//connect.facebook.net/en_US/sdk.js', function(){
-        FB.init({
-          appId: '1607978622814240',
-          version: 'v2.3' // or v2.0, v2.1, v2.0
-        });
-        get_feed();
-      });
-    });
 
-    function get_feed(){
-      var pageAccessToken = '1607978622814240|titLGhcnykpNz7lZwEUADOTsKUs';
-
-      FB.api(
-          "/1662674363965244/feed",
-          'get',
-          { access_token : pageAccessToken,
-          since : 'last month',
-          limit: 300},
-          fill_data
-      );
-    }
-
-    function parse_data(data) {
-      var filter_words = ["NOMBRE","GÉNERO","GENERO","DIA","D(.)A", "FECHA","LUGAR","PRECIO","HORARIO","MUESTRA"];
-
-
-      var parsed_obj = [];
-
-      var message = data.message.split("\n");
-      for (var i = 0; i < message.length; i++) {
-        var fila = message[i];
-        for (var j = 0; j < filter_words.length; j++) {
-          var value = filter_words[j];
-          var re = new RegExp("\\b" + value + "\\b","g");
-          if (fila.toUpperCase().match(re)) {
-            var o = {tag: fila.split(/:(.+)?/)[0],
-                     content: fila.split(/:(.+)?/)[1]};
-            parsed_obj.push(o);
-          }
-        }
-      }
-      return parsed_obj;
-    }
-
-    function fill_data(data) {
-      $('#bandas').empty();
-      $.each(data.data, function (index, value) {
-        var data_model = {"texto": parse_data(value)};
-        template = $('#template').html();
-        Mustache.parse(template);
-        var rendered = Mustache.render(template, data_model);
-        $('#bandas').append(rendered);
-      })
-    }
-
-    </script>
-
-
-    <script id="template" type="x-tmpl-mustache">
+    <script id="date_data" type="x-tmpl-mustache">
     <section class="">
         <ul>
         {{#texto}}
           <li class="li-item">
-            {{tag}} : {{content}}
+            {{tag}} : {{{content}}}
           </li>
         {{/texto}}
         </ul>
+    </section>
+    </script>
+
+    <script id="left_over" type="x-tmpl-mustache">
+    <section class="">
+        {{#left_over_data}}
+            {{{.}}} <br>
+        {{/left_over_data}}
     </section>
     </script>
   </head>
