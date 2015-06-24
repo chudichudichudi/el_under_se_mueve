@@ -9,7 +9,14 @@
     <title>El under se mueve</title>
 
     <script id="date_data" type="x-tmpl-mustache">
+
     <section class="">
+        {{#date}}
+          <h2>{{date}}</h2>
+        {{/date}}
+        {{#city}}
+          <h3>{{city}}</h3>
+        {{/city}}
         <ul>
         {{#texto}}
           <li class="li-item">

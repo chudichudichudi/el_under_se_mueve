@@ -1,11 +1,36 @@
 function Article(params) {
-  this.date = '';
-  this.city = '';
   this.init(params);
 }
 
 Article.prototype.init = function (params) {
   $.extend(true,this,params);
+  this.try_find_date();
+  this.try_find_city();
+};
+
+Article.prototype.try_find_city = function () {
+  var self = this;
+  $.each(this.texto, function (index, value) {
+    var re = new RegExp("CIUDAD","g");
+    if (value.tag.match(re)) {
+      self.city = value.content;
+    }
+  })
+};
+
+Article.prototype.try_find_date = function () {
+  var self = this;
+  $.each(this.texto, function (index, value) {
+    var re = new RegExp("[0-9]+/[0-9]+/[0-9]+","g");
+    if (value.tag.match(re)) {
+        self.date = value.tag.match(re)[0];
+    }
+    if (value.content.match(re)) {
+        self.date = value.tag.match(re)[0];
+    }
+    // TODO: agregar mas expresiones regulares
+    // del estilo ENERO|FEBRERO etc
+  })
 };
 
 Article.prototype.render = function (where_to_append) {
@@ -55,7 +80,9 @@ ArticleParser.prototype.parse = function (data) {
       left_over.push(fila.autoLink());
     }
   });
-  return new Article({texto:template_data, original_data : data, left_over_data: left_over});
+  var ret = new Article({texto:template_data, original_data : data, left_over_data: left_over});
+
+  return ret;
 };
 
 
@@ -76,8 +103,8 @@ function get_feed(){
       "/1662674363965244/feed",
       'get',
       { access_token : pageAccessToken,
-      since : 'last month',
-      limit: 300},
+      since : '-3 month',
+      limit: 600},
       fill_data
   );
 }
@@ -87,9 +114,9 @@ function sort(fechas) {
   return fechas;
 }
 
+var fechas = [];
 function fill_data(data) {
   var ap = new ArticleParser();
-  var fechas = [];
   $('#bandas').empty();
   $.each(data.data, function (index, value) {
     try {
