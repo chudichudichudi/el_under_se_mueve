@@ -35,13 +35,14 @@ Article.prototype.try_find_date = function () {
 
 Article.prototype.render = function (where_to_append) {
   var date_data = $('#date_data').html();
-  Mustache.parse(date_data);
-  var date_rendered = Mustache.render(date_data, this);
   var left_over_template = $('#left_over').html();
-  Mustache.parse(left_over_template);
-  var left_over_rendered = Mustache.render(left_over_template, this);
+  Mustache.parse(date_data);
+  var date_rendered = Mustache.render(date_data, this, {left_over: left_over_template});
+  
+  //Mustache.parse(left_over_template);
+  //var left_over_rendered = Mustache.render(left_over_template, this);
   $(where_to_append).append(date_rendered);
-  $(where_to_append).append(left_over_rendered);
+  //$(where_to_append).append(left_over_rendered);
 };
 
 
@@ -103,7 +104,7 @@ function get_feed(){
       "/1662674363965244/feed",
       'get',
       { access_token : pageAccessToken,
-      since : '-3 month',
+      //since : '-3 month',
       limit: 600},
       fill_data
   );

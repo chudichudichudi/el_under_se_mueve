@@ -8,10 +8,44 @@ h1 {
   text-align: center;
 }
 
-ul {
-  background-color:#7190D0;
-  padding: 5px;
+
+
+.container{
+	display: flex;
+	border: 10px solid mistyrose;
+	flex-direction: column;
+
+	padding: 10px;
+
+	align-content: center;
+
 }
 
-li {
+.item {
+	background-color: pink
+	text-align: center;
+	color: white;
+    text-shadow: 2px 2px #000000;
+
+}
+
+.item:nth-child(odd) {
+	background-color: green;
+}
+
+.item:nth-child(even) {
+	background-color: #16a058;
+}
+
+.item {
+    flex:1 1 calc(33.3333333% - 20px);
+    margin: 10px;
+}
+
+.item1, .item3, .item9 {
+	flex:1 1 calc(66.66666% - 20px);
+}
+
+.item3 {
+	height: 40vh;
 }

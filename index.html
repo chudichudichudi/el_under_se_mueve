@@ -9,26 +9,29 @@
     <title>El under se mueve</title>
 
     <script id="date_data" type="x-tmpl-mustache">
-
-    <section class="">
-        {{#date}}
-          <h2>{{date}}</h2>
-        {{/date}}
-        {{#city}}
-          <h3>{{city}}</h3>
-        {{/city}}
-        <ul>
-        {{#texto}}
-          <li class="li-item">
-            {{tag}} : {{{content}}}
-          </li>
-        {{/texto}}
-        </ul>
-    </section>
+    <div class="item">
+      <section >
+          {{#date}}
+            <p>{{date}}</p>
+          {{/date}}
+          {{#city}}
+            <p>{{city}}</p>
+          {{/city}}
+          <ul>
+          {{#texto}}
+            <li class="li-item">
+              {{tag}} : {{{content}}}
+            </li>
+          {{/texto}}
+          </ul>
+      </section>
+      {{> left_over}}
+    </div>
+    
     </script>
 
     <script id="left_over" type="x-tmpl-mustache">
-    <section class="">
+    <section>
         {{#left_over_data}}
             {{{.}}} <br>
         {{/left_over_data}}
@@ -37,7 +40,7 @@
   </head>
   <body>
     <h1>El under se mueve</h1>
-    <article id="bandas">
+    <article id="bandas" class="container">
 
     </article>
   </body>
